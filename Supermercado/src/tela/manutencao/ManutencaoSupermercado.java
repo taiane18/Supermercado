@@ -4,13 +4,33 @@
  * and open the template in the editor.
  */
 package tela.manutencao;
-
+import tela.listagem.ListagemSupermercado;
 /**
  *
  * @author TANIA
  */
 public class ManutencaoSupermercado extends javax.swing.JDialog {
-
+public ListagemSupermercado listagem;
+//Entrando na Manutenção de Produto para Adicionar um novo Produto (OBS: o nome do método deverá ser o mesmo nome da classe)
+ public ManutencaoSupermercado(java.awt.Frame parent, boolean modal, ListagemSupermercado listagem) {
+        super(parent, modal);
+        initComponents();
+        this.listagem = listagem;
+        
+        jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
+        btnAlterar.setEnabled(false); //desabilitando o botão alterar
+        btnExcluir.setEnabled(false); //desabilitando o botão excluir
+  }
+ 
+ 
+ public ManutencaoSupermercado(java.awt.Frame parent, boolean modal, ListagemSupermercado listagem, int pk) {
+        super(parent, modal);
+        initComponents();
+        
+        jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
+        this.listagem = listagem;
+        controlador.ControladorSupermercado.atualizaCampos(this, pk);//pegando os valores do BD e colocando na tela
+    }
     /**
      * Creates new form ManutencaoMercado
      */
@@ -36,7 +56,7 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
-        btnEcluir = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jtfNome_fantasia = new javax.swing.JTextField();
@@ -69,9 +89,19 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
             }
         });
 
-        btnEcluir.setText("Excluir");
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -108,7 +138,7 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterar))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEcluir)
+                        .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
@@ -152,7 +182,7 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
                     .addComponent(btnAlterar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEcluir)
+                    .addComponent(btnExcluir)
                     .addComponent(btnCancelar))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -163,6 +193,15 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
      controlador.ControladorSupermercado.inserir(this);   // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+    controlador.ControladorSupermercado.alterar(this);    // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+     controlador.ControladorSupermercado.excluir(this);
+   // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,7 +250,7 @@ public class ManutencaoSupermercado extends javax.swing.JDialog {
     public javax.swing.JButton btnAdicionar;
     public javax.swing.JButton btnAlterar;
     public javax.swing.JButton btnCancelar;
-    public javax.swing.JButton btnEcluir;
+    public javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
